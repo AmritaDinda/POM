@@ -16,6 +16,7 @@ import com.qa.opencart.exception.BrowserException;
 
 public class DriverFactory {
 
+	public static String isHighlight;
 	public WebDriver driver;
 	Properties prop;
 	

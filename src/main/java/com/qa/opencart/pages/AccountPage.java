@@ -7,39 +7,47 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.qa.opencart.constants.AppConstant;
+import com.qa.opencart.utils.ElementUtil;
+
 public class AccountPage {
 
 	private WebDriver driver;
+	private ElementUtil eleutil;
 	
-	public AccountPage(WebDriver driver) {
-		this.driver = driver;
-	}
 
 	private By logoutLink = By.linkText("Logout");
 	private By AccsHeader = By.cssSelector("div #content h2");
 	private By search = By.name("search");
+	private By searchIcon = By.cssSelector("div#search button");
 	
-	public String accPagetitle() {                                 //public called the private "Encapsulation"
-		String title = driver.getTitle();
-		System.out.println(title);
-		return accPagetitle();
+	public AccountPage(WebDriver driver) {
+		this.driver = driver;
+		eleutil = new ElementUtil(driver);
 	}
-	
-	public void accPageUrl() {
-		String url = driver.getCurrentUrl();
-		System.out.println(url);
+
+	                                                            //public called the private "Encapsulation"	
+	public String accPagetitle() { 
+		String title = eleutil.waitForTitleContainsAndReturn(AppConstant.ACCOUNT_PAGE_TITLE,AppConstant.DEFULT_SHORT_TIMEOUT);        
+		System.out.println(title);
+		return title;
 	}
 	
 	public boolean isLogoutLinkExist() {
-		return driver.findElement(logoutLink).isDisplayed();
+		return eleutil.isElementDisplayed(logoutLink);
 	}
 	
-	public boolean issearchExist() {
-		return driver.findElement(search).isDisplayed();
+	public void doSearch(String sekey) {
+	eleutil.waitForElementVisible(search, AppConstant.DEFULT_SHORT_TIMEOUT).sendKeys(sekey);;
+	eleutil.doClick(searchIcon);
 	}
 	
-	public List<String> accHeaderExist() {
-		List<WebElement> accountheder = driver.findElements(AccsHeader);
+	public int accPageHeaderCount() {
+		return eleutil.waitForElementsVisible(AccsHeader, AppConstant.DEFULT_SHORT_TIMEOUT).size();
+	}
+	
+	public List<String> getAccPageHeader() {
+		List<WebElement> accountheder = eleutil.waitForElementsVisible(AccsHeader,AppConstant.DEFULT_SHORT_TIMEOUT );
 		List<String>accountHeaderList = new ArrayList<String>();
 		
 		for(WebElement e: accountheder) {

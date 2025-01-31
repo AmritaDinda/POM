@@ -7,6 +7,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
 import com.qa.opencart.factory.DriverFactory;
+import com.qa.opencart.pages.AccountPage;
 import com.qa.opencart.pages.LoginPage;
 
 public class BaseTest {
@@ -16,6 +17,8 @@ public class BaseTest {
 	protected Properties prop;
 	
 	protected LoginPage loginPage; 
+	protected AccountPage accPage; 
+
 
 	
 	@BeforeTest
