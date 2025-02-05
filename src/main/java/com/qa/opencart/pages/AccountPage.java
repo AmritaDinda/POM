@@ -37,11 +37,6 @@ public class AccountPage {
 		return eleutil.isElementDisplayed(logoutLink);
 	}
 	
-	public void doSearch(String sekey) {
-	eleutil.waitForElementVisible(search, AppConstant.DEFULT_SHORT_TIMEOUT).sendKeys(sekey);;
-	eleutil.doClick(searchIcon);
-	}
-	
 	public int accPageHeaderCount() {
 		return eleutil.waitForElementsVisible(AccsHeader, AppConstant.DEFULT_SHORT_TIMEOUT).size();
 	}
@@ -58,7 +53,14 @@ public class AccountPage {
 	}
 	
 	
+	public ResultPage doSearch(String sekey) {
+	System.out.println("Search Key ==>"+sekey);
+	WebElement searchEle = eleutil.waitForElementVisible(search, AppConstant.DEFULT_SHORT_TIMEOUT);
+     eleutil.doSendKeys(searchEle, sekey);
+	eleutil.doClick(searchIcon);
+	return new ResultPage(driver); //TDD (Test Driven Development) - first write test cases on the basses of this you should go for the development
 	
+	}
 	
 	
 	
